@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Week 6 Lab </title>
+        <style type="text/css">
+            .contentBox {
+                width: 300px;
+                margin: 1em;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        </style>
+    </head>
+    <body>
+
+	<div id="content" class="contentBox"></div>
+
+	<input type="button" id="showResults" value="Show Results" />
+
+	<script type="text/javascript">
+
+		 //http://canvas.site40.net/demopage.html	
+		// XML HTTP Request
+		var xhr = new XMLHttpRequest();     //creates a new variable called xhr and make an AJAX request object
+		var content = document.getElementById('content');  // creates a variable called content 
+		var showResults = document.getElementById('showResults');  // creates a variable called showresults  
+		var url = "demo.php?page=";     // pass what page you want
+                var step = 1;               // sets the step to 1 before the function is run
+		
+                showResults.addEventListener('click',makeAJAXCall); // click event that makes an request to the server for content
+		
+		function callback() {             // callback function that grabs the content
+			var response = xhr.responseText;        // xhr  = AJAX object
+						
+			content.innerHTML += response;
+                        step++;
+                        
+
+		}
+		
+		
+		xhr.onreadystatechange = function() {       // onreadystatechange event is triggered every time the readyState changes. 
+                                                                //The readyState property holds the status of the XMLHttpRequest.
+								
+		   if (xhr.readyState==4 && xhr.status==200) {  // basic code that needs to be defined/ overwritten
+			callback();                           // when something is finished the server will callback                  
+		   } 
+		};  
+		
+		
+                function makeAJAXCall(){        // send the request with how many pages you want
+                    if ( step < 5 ) {  //demo.php?page=4                        
+                        xhr.open('GET', url+step, true);  // make an open GET request. AJAX will make an open connection while not being on the requested site.
+                        xhr.send();   
+                    }
+                }
+		
+		
+                
+		window.addEventListener('load', makeAJAXCall);      // adds the event listner for a click
+
+
+                function scrollCheck() {    // a function that detects the postion of the scroll bar
+			if ( (window.innerHeight + window.scrollY) >= document.body.offsetHeight) {	// innerHeight is the part of the window that is viewable			
+				makeAJAXCall();                                                          // + scrollY includes the position of the scroll bar and calls the new bottom of the web site as offsetHeight
+			}               // makes another AJAX call to the server
+		}
+		
+		window.addEventListener("scroll", scrollCheck);      // adds the event listner for a click
+
+		
+		
+		
+		 
+
+		
+		
+	</script>
+    </body>
+</html>
