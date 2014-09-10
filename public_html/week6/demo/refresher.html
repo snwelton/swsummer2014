@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">       
+    </head>
+    <body>
+        <div id="test">Hello</div>
+        
+        <script type="text/javascript">
+            /*
+                With JavaScript I want to style the DIV with
+                the ID of "test" with a border "1px solid black".
+                Next I want to add an event lisenter that when
+                clicked on will update the inner HTML with the new date and time.
+                use new Date() in JavaScript.
+             */
+            
+            var divStyles = {
+                "border" : "1px solid black",
+                "cursor" : "ponter"
+            };
+            
+            var div = document.getElementById('test');      // creates a variable for the div called test
+            
+            for ( var key in divStyles){                  // same as below
+                div.style.cursor = divStyles[key];
+            }
+            
+            //div.style.border = "1px solid black";           // changes the div's border style
+            
+            //div.style.cursor = 'ponter';                    // changes the currsor
+            
+            div.addEventListener('click', updateTime );     // creates an event listener that activates with a click and calls is updateTime
+           
+            function updateTime(){                          // creates a function for updateTime and displayes the new time and date in the inner html 
+                div.innerHTML = new Date();
+            }
+            
+        </script>
+    </body>
+</html>
