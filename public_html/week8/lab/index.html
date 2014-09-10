@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+
+1. Create a new Lab8.html file under your week 8 folder.  
+    Create a Div and 3 buttons on the page.
+    Button 1: Fade in
+    Button 2: Fade out
+    Button 3: Move Div
+    Make sure to give the buttons ID's so you can add an event handler to them.
+
+2. Create an alert message using the alert function
+(alert is a built in JavaScript global function) 
+that will display after the page has been open for 5 seconds.
+use:  alert('hi');
+
+3. Use a timer to run a function that will fade out a div.
+hint: Elem.style.opacity
+    opacity can only take a number between 0 and 1
+    To make it simple it should fade in only 10 steps.
+    10 / 100
+
+4. Create another function that will fade in the same div.
+Hint: you should cancel the previous timer before starting this one
+    
+5.  Create a function that will move the div across the screen.
+hint:  Set the div to be "position: absolute;" in CSS.  
+    in JavaScript you can update the elem.style.left property
+    to increase the position by 10 pixels each time it's run.
+    e.g.
+    var divPosLeft = 0;
+    
+    divPosLeft = divPosLeft + 10;
+    elem.style.left = divPosLeft+"px";
+-->
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            #hello {
+                border: 5px solid black;
+                position: absolute;
+                
+            }
+        </style>
+    </head>
+    <body>
+        <div id="hello">Hello</div>
+        <br clear ="all">
+        <br clear ="all">
+       
+        <button id="fadeIn">Fade In</button>
+        <button id="fadeOut">Fade Out</button>
+        <button id="moveDiv">Move Div</button>
+        
+        <script type="text/javascript">
+            // fade out button
+            var hello = document.getElementById('hello');
+            var fadeOut = document.getElementById('fadeOut');
+            fadeOut.addEventListener('click', fadingOut);
+            
+            var element;        // control
+            var fade = 10;
+            
+            function fadingOut(){
+                clearInterval(element);
+                element = setInterval(fadeLoop, 200);              
+            }
+            
+            function fadeLoop(){
+                fade--;
+                hello.style.opacity = (fade / 10);
+                
+                if (fade < 1){
+                    clearInterval(element);
+                }
+            }
+            
+            
+            // fade in button
+            var fadeIn = document.getElementById('fadeIn');
+            fadeIn.addEventListener('click', fadingIn);
+            var fade2 = 1;
+            
+            function fadingIn(){
+                clearInterval(element);
+                element = setInterval(fadeLoop2, 200);
+            }
+            
+            function fadeLoop2(){
+                fade2++;
+                hello.style.opacity = (fade2 / 10);
+                
+                if (fade2 > 10){
+                    clearInterval(element);
+                }
+            }
+            
+            // move div
+            var moveDiv = document.getElementById('moveDiv');
+            moveDiv.addEventListener('click', moveDivRight);
+            var divPosRight = 0;
+            var control = 0;
+            
+            function moveDivRight(){
+                
+               element = setInterval(divRight, 5);
+            }
+            
+            
+            function divRight(){
+            divPosRight = divPosRight + 10;
+            hello.style.left = divPosRight+"px";  
+            
+            
+            
+            if (control < 160){
+                control++;
+                setTimeout('divRight', 5);
+            }else{
+                clearTimeout(element);
+            }
+              }
+            
+            
+            // Alert
+            function popUpAlert(){
+                alert('hi');
+            }
+            setTimeout(popUpAlert, 5000);
+            
+        </script>
+        
+    </body>
+</html>
