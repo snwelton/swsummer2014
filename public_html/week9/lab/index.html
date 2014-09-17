@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lab 9</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <style type="text/css">
+            canvas {
+                border: 1px solid black;
+            }
+            
+        </style>
+    </head>
+    <body>
+        
+        <canvas id="race" width="750" height="150"></canvas>
+        <br />
+        <button id="play">Play</button>
+      
+        
+        
+        <script type="text/javascript">
+            /*
+                We will be creating a canvas race game. We will have two teams, one red and the other blue, that will race to the finish line.
+
+                Using Canvas create two rectangles, one red and the other blue. They should be the same width and height. 
+                When moving the rectangles make sure to generate a random number to move the x position of each rectangle. 
+                The minimum should always be greater than zero. It should be called twice to get a unique number for each rectangle. 
+                Once the rectangle reaches the finish line, display the winner. A play button should appear to reset the race. 
+                Once the race is started the play button should be hidden again.
+             */
+            
+            // grab and declare variables
+            var can = document.getElementById('race');
+            var ctx = can.getContext('2d');            
+            var play = document.getElementById('play');
+            
+            
+             var xred = 20,
+                xblue = 20;
+               
+             // create a clear function   
+            function drawClear(){
+                ctx.clearRect(0,0,can.width,can.height);
+            }
+               
+               // draw red car function and gives it a new random position
+            function drawRed(){
+                
+                ctx.fillStyle = "red"; // x, y, width, height
+                ctx.fillRect(xred, 85, 50, 40);
+                xred += randNum(20);
+            }
+            // draw blue car function and gives it a new random position
+            function drawBlue(){
+                
+                ctx.fillStyle = "blue"; // x, y, width, height
+                ctx.fillRect(xblue, 30, 50, 40);
+                xblue += randNum(20);
+                
+            }
+            
+            drawBlue();
+            drawRed();
+             
+             // make the play button clickable
+            play.addEventListener('click', moveBoxes);
+            
+            // create A FUNCTION TO MOVE BOXES          
+            function moveBoxes()
+            {   
+                drawBlue();
+                drawRed();
+                document.getElementById('play').style.visibility = 'hidden';    // hide botton
+                //move boxes at same time
+                if ( xred < (can.width-100) && xblue < (can.width-100) )
+                {                    
+                  drawClear();
+                    drawRed();
+                   drawBlue();                    
+                   setTimeout(moveBoxes, 50);    
+                }else if (xblue >= (can.width-100)) // if blue wins display on screen
+                {
+                   ctx.fillStyle = "blue";
+                ctx.font = "16pt Helvetica";
+                ctx.fillText("Blue Wins!!", 150, can.height-10);
+               document.getElementById('play').style.visibility = 'visible';     // show play button after declairing winner   
+                xred = 20;
+                xblue = 20;
+                }else  //if red wins display on screen
+                {
+                   ctx.fillStyle = "red";
+                ctx.font = "16pt Helvetica";
+                ctx.fillText("Red Wins!!", 150, can.height-10);
+                document.getElementById('play').style.visibility = 'visible';    // show play button after declairing winner          
+                xred = 20;
+                xblue = 20;
+                }
+            }
+            
+            // reandom number generator
+           function randNum(max) {
+               return Math.ceil(Math.random()*max) + 1;
+           }
+           
+           
+            
+            
+        </script>
+    </body>
+</html>
