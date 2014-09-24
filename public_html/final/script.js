@@ -16,7 +16,6 @@ function PhoneValidator (str) {
     return phoneRegex.test(str);
 }
 
-
 // check that the comments dont have any html
 function strip_HTML(str) {
     var findHtml = /<(.|\n)*?>/gi;
@@ -111,10 +110,7 @@ function saveUserData() {
     phoneErr.innerHTML = "<p>phone is not valid.</p>";       
     }
 
-
-    // comments
-   // comments.value = strip_HTML(comments.value);
-
+    // comments validator
     if (!comments.value.length){
         console.log("comments needs a length");
         hasErrors = true; 
@@ -187,11 +183,11 @@ function saveUserData() {
        var deleteLastRow = tableData.rows.length;
        tableData.deleteRow(deleteLastRow - 1);
          
-     };
+     }
 
 
      // clear local storage
   function clearUserData(){
                   
                 localStorage.clear();
-   };
+   }
