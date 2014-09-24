@@ -6,7 +6,7 @@ function SpaceAlphaValidate( str ) {
 
 // checks to make sure a valid email is entered
 function EmailValidator (str) {
-    var emailRegex = /^\[A-Z0-9._%+-]+@[a-zA-Z_]+?\.[a-zA-Z]{3}$/;
+    var emailRegex = /^[a-zA-Z]+[@]{1}[a-zA-Z]+.[a-zA-Z]{2,3}$/;
     return emailRegex.test(str);
 }
 
@@ -30,8 +30,7 @@ function strip_HTML(str) {
     var email = document.getElementById('email');
     var emailErr = document.getElementById('email_err');
     var comments = document.getElementById('description');
-    var commentsErr = document.getElementById('description_err');
-    var hasErrors = false;
+    var commentsErr = document.getElementById('description_err');    
     var myjson = [];
 
         
@@ -46,71 +45,71 @@ function saveUserData() {
         "Phone"  : "",
         "Comment"  : ""
     };
-
+    
+    var hasErrors = false;
    // first name    checks that the input is correct and displays a error message if its incorrect
     if ( !fullname.value.length ) {
-            console.log("Fullname needs a length");
+        hasErrors = true;
+        console.log("Fullname needs a length");
+        fullname.classList.remove('good');
+        fullname.classList.add('bad');       
+        fullnameErr.innerHTML = "<p>FullName is not valid.</p>";    
     } else if ( SpaceAlphaValidate( fullname.value ) === false ) {
+        fullname.classList.remove('good');
+        fullname.classList.add('bad');       
+        fullnameErr.innerHTML = "<p>FullName is not valid.</p>";    
+            hasErrors = true;
             console.log("Fullname needs Alpha chars");
     } else {
+        fullname.classList.remove('bad');
+        fullname.classList.add('good');       
+        fullnameErr.innerHTML = "<p>FullName is not valid.</p>";    
             console.log("Fullname is good");
     }
 
-    if ( fullname.value.length ) {
-     fullname.classList.remove('bad');
-     fullname.classList.add('good');        
-    // fullnameErr.innerHTML = '';        
-      } else {
-    hasErrors = true;
-
-    fullname.classList.remove('good');
-    fullname.classList.add('bad');       
-    fullnameErr.innerHTML = "<p>FullName is not valid.</p>";       
-      }
-
     // email
     if (!email.value.length) {
-        console.log("Email needs a length");            
+        hasErrors = true;
+        email.classList.remove('good');
+        email.classList.add('bad'); 
+        console.log("Email needs a length"); 
+        emailErr.innerHTML = "<p>Email is not valid.</p>";    
     } else if (EmailValidator(email.value) === false){
+        hasErrors = true;
+        email.classList.remove('good');
+        email.classList.add('bad'); 
         console.log("Email isn't valid");
+        emailErr.innerHTML = "<p>Email is not valid.</p>"; 
     } else {
+        email.classList.remove('bad');
+        email.classList.add('good'); 
         console.log("Email is good");
-    }
-
-     if ( email.value.length ) {
-     email.classList.remove('bad');
-     email.classList.add('good');        
-     //emailErr.innerHTML = '';        
-    } else {
-    hasErrors = true;
-
-    email.classList.remove('good');
-    email.classList.add('bad');       
-    emailErr.innerHTML = "<p>Full Name is not valid.</p>";       
     }
 
      // phone number validator
     if ( !phone.value.length ) {
-            console.log("phone needs a length");
+        hasErrors = true;
+        phone.classList.remove('good');
+        phone.classList.add('bad');    
+        console.log("phone needs a length");
+        phoneErr.innerHTML = "<p>Phone is not valid.</p>"; 
     } else if ( PhoneValidator( phone.value ) === false ) {
-            console.log("phone needs numbers");
+        hasErrors = true;
+        phone.classList.remove('good');
+        phone.classList.add('bad');    
+        console.log("phone needs numbers");
+        phoneErr.innerHTML = "<p>Phone is not valid.</p>"; 
     } else {
-            console.log("phone is good");
+         phone.classList.remove('bad');
+    phone.classList.add('good');    
+        console.log("phone is good");
     }
 
-      if ( phone.value.length ) {
-     phone.classList.remove('bad');
-     phone.classList.add('good');        
-     //phoneErr.innerHTML = '';        
-    } else {
-    hasErrors = true;
 
-    phone.classList.remove('good');
-    phone.classList.add('bad');       
-    phoneErr.innerHTML = "<p>phone is not valid.</p>";       
-    }
+    
 
     // comments validator
+    comments.value = strip_HTML(comments.value);
     if (!comments.value.length){
         console.log("comments needs a length");
         hasErrors = true; 
@@ -188,6 +187,6 @@ function saveUserData() {
 
      // clear local storage
   function clearUserData(){
-                  
+                document.getElementById("tableData").innerHTML = "";  
                 localStorage.clear();
    }
